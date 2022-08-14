@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Express Mpun</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div id="app" class="h-screen bg-gray-300">
+      <nav class="w-full h-30px bg-white flex justify-between">
+        <figure>
+          <img width="80" src="../frontend/assets/Logo.png" alt="" />
+        </figure>
+        <ul class="flex p-4 text-green-600 gap-4 font-bold">
+          <li>Home</li>
+          <li>List</li>
+          <li>Form</li>
+        </ul>
+      </nav>
+      <div class="flex flex-col py-8 items-center justify-center p-20">
+        <h1 class="p-4 text-green-700 text-4xl">Wellcome to , FunnyShuttle</h1>
+        <form
+          @submit.prevent="transportasi.isUpdate ? updateTransportasi() : submitTransportasi()"
+          class="flex gap-4"
+        >
+          <input
+            v-model="transportasi.keberangkatan"
+            type="text"
+            placeholder="Masukkan keberangkatan"
+            class="bg-white rounded-lg shadow-md focus:outline-none focus:drop-shadow-md border-2 border-gray-200"
+          />
+          <input
+            v-model="transportasi.jadwal"
+            type="text"
+            placeholder="Masukkan jadwal keberangkatan"
+            class="bg-white rounded-lg shadow-md focus:outline-none focus:drop-shadow-md border-2 border-gray-200"
+          />
+          <input
+            v-model="transportasi.harga"
+            type="text"
+            placeholder="Masukkan harga"
+            class="bg-white rounded-lg shadow-md focus:outline-none focus:drop-shadow-md border-2 border-gray-200"
+          />
+          <button
+            class="bg-green-400 border-2 rounded-lg text-white p-3"
+            type="submit"
+          >
+            {{ transportasi.isUpdate ? 'Update' : 'Create'}}
+          </button>
+        </form>
+        <div class="relative pt-4 overflow-x-auto shadow-md sm:rounded-lg">
+          <table class="w-full text-lg text-left">
+            <thead class="uppercase bg-green-300">
+              <th scope="col" class="px-6 py-3">NO.</th>
+              <th scope="col" class="px-6 py-3">Asal dan Tujuan</th>
+              <th scope="col" class="px-6 py-3">Jadwal</th>
+              <th scope="col" class="px-6 py-3">Harga</th>
+              <th scope="col" class="px-6 py-3">aksi</th>
+            </thead>
+            <tbody class="text-black bg-white">
+              <tr
+                v-for="(item,index) in transportasi.list"
+                :key="index"
+                class="bg-white border-b dark:border-gray-700"
+              >
+                <td class="px-6 py-4">{{item.id}}</td>
+                <td class="px-6 py-4">{{item.keberangkatan}}</td>
+                <td class="px-6 py-4">{{item.jadwal}}</td>
+                <td class="px-6 py-4">{{item.harga}}</td>
+                <td class="px-6 py-4 mr-5">
+                  <div class="flex gap-4">
+                    <img
+                      class="cursor-pointer"
+                      @click="getTransportasiById(item.id)"
+                      src="https://img.icons8.com/ios-glyphs/30/000000/edit--v1.png"
+                    />
+                    <img
+                      class="cursor-pointer"
+                      @click="deleteTransportasi(item.id)"
+                      src="https://img.icons8.com/material-rounded/24/000000/filled-trash.png"
+                    />
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script src="./index.js"></script>
+  </body>
+</html>
